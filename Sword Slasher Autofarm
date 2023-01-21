@@ -1,0 +1,74 @@
+getgenv().AutoClick = true;                                   ----Made by Nicola#5015
+getgenv().Wave = true;
+getgenv().TpMob = true;                                                 
+
+local vim = game:GetService('VirtualInputManager')
+
+local function m1click() 
+    vim:SendMouseButtonEvent(0,0,0,true,game,0)
+    wait()
+    vim:SendMouseButtonEvent(0,0,0,true,game,0)                                         
+end
+
+
+spawn(function()
+    while AutoClick == true do
+        m1click()
+        wait()
+    end
+end)
+
+
+
+
+
+spawn(function()
+    while Wave == true do
+    wait(0.5)
+    local function onCharacterAdded(character)
+    local player = game:GetService("Players").LocalPlayer 
+
+    local humanoid = character:WaitForChild("Humanoid", 5)        
+    if not humanoid then
+        return
+    end
+
+    humanoid.Died:Connect(function()
+        print("Dead")
+        wait(10)
+        print("Respawned")
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 15, -28)
+end
+)end
+ 
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
+
+do 
+    local alreadyExistingCharacter = game:GetService("Players").LocalPlayer.Character
+    if alreadyExistingCharacter then
+        onCharacterAdded(alreadyExistingCharacter )
+    end
+end
+end
+end
+)
+
+
+
+
+
+spawn(function()
+    wait(0.1)
+    while TpMob == true do
+    pcall(function()
+    wait(0.1)
+    local mob = Workspace.Mobs.Model.HumanoidRootPart
+for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
+    if v:IsA("Part") and v.Name == "HumanoidRootPart" then
+    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = mob.CFrame
+    end
+end
+end
+)
+end
+end)
